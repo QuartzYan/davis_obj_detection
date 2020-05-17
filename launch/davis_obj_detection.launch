@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="davis_obj_detection" pkg="davis_obj_detection" type="davis_obj_detection" output="screen">
+  </node>
+
+</launch>
