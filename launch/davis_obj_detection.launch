@@ -1,5 +1,7 @@
 <launch>
 
+  <include file="$(find davis_stereo_stitch)/launch/davis_stereo_stitch.launch" />
+
   <node name="davis_obj_detection" pkg="davis_obj_detection" type="davis_obj_detection" output="screen">
   </node>
 

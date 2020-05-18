@@ -41,9 +41,9 @@ void DavisObjDetection::imageCallback(const sensor_msgs::Image::ConstPtr& image)
   cv::Mat srcImg;
   cv::cvtColor(cv_ptr->image, srcImg, CV_RGB2BGR);
 
-  if(point_count_ > 50)
+  if(point_count_ > 80)
   {
-    cv::circle(srcImg, center_point_, 100, cv::Scalar(255, 255, 255));
+    cv::circle(srcImg, center_point_, 80, cv::Scalar(255, 255, 255));
   }
 
   //pub
@@ -101,11 +101,11 @@ void DavisObjDetection::eventImageCallback(const sensor_msgs::Image::ConstPtr& i
     }
   }
 
-  if(point_count_ > 50)
+  if(point_count_ > 80)
   {
     center_point_.x = SX / point_count_;
     center_point_.y = SY / point_count_;
-    cv::circle(cv_ptr->image, center_point_, 100, cv::Scalar(255, 255, 255));
+    cv::circle(cv_ptr->image, center_point_, 80, cv::Scalar(255, 255, 255));
   }
 
   //pub
