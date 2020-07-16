@@ -6,6 +6,7 @@
 #include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/image_encodings.h>
 #include <image_transport/image_transport.h>
+#include <geometry_msgs/PointStamped.h>
 
 #include<opencv2/opencv.hpp>
 #include <cv_bridge/cv_bridge.h>
@@ -23,6 +24,7 @@ public:
 private:
   // ROS interface
   ros::NodeHandle nh_;
+  ros::Publisher point_pub_;
   image_transport::Publisher image_pub_;
   image_transport::Publisher event_image_pub_;
 

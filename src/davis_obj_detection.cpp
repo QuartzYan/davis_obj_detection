@@ -12,7 +12,7 @@ DavisObjDetection::DavisObjDetection()
   :K(2),point_count_(0)
 {
   center_point_ = cv::Point(0, 0);
-
+  point_pub_ = nh_.advertise<geometry_msgs::PointStamped>("obj_point", 1);
   image_sub_ = nh_.subscribe("stitch_image", 1, &DavisObjDetection::imageCallback, this);
   event_image_sub_ = nh_.subscribe("stitch_event_image", 1, &DavisObjDetection::eventImageCallback, this);
 
@@ -41,7 +41,7 @@ void DavisObjDetection::imageCallback(const sensor_msgs::Image::ConstPtr& image)
   cv::Mat srcImg;
   cv::cvtColor(cv_ptr->image, srcImg, CV_RGB2BGR);
 
-  if(point_count_ > 80)
+  if(point_count_ > 200)
   {
     cv::circle(srcImg, center_point_, 80, cv::Scalar(255, 255, 255));
   }
@@ -101,11 +101,19 @@ void DavisObjDetection::eventImageCallback(const sensor_msgs::Image::ConstPtr& i
     }
   }
 
-  if(point_count_ > 80)
+  if(point_count_ > 200)
   {
     center_point_.x = SX / point_count_;
     center_point_.y = SY / point_count_;
     cv::circle(cv_ptr->image, center_point_, 80, cv::Scalar(255, 255, 255));
+        
+    geometry_msgs::PointStamped msg;
+    msg.header.stamp = ros::Time::now();
+    msg.header.frame_id = "left_davis_link";
+    msg.point.x = center_point_.x;
+    msg.point.y = center_point_.y;
+    msg.point.z = 0.0;
+    point_pub_.publish(msg);
   }
 
   //pub
